@@ -13,11 +13,14 @@ var topUrl = window.top.location.href;
 if (topUrl !== currentUrl) {
 currentUrl = topUrl + ',' + currentUrl;
 }
+currentUrl = encodeURIComponent(currentUrl);
 gaServerTracker.src = 'http://www.ftchinese.com/index.php/ft/hit/' + AssID + '/2?ec=' + AdName + ' (' + AssID + ')' + '&ea=initiate&el=' + currentUrl + '&' + Math.random();
 if (typeof window.parent.sendImpToThirdParty === 'function') {
 window.parent.sendImpToThirdParty(Imp, AdName, AssID);
+gaServerTracker.src = 'http://www.ftchinese.com/index.php/ft/hit/' + AssID + '/2?ec=' + AdName + ' (' + AssID + ')' + '&ea=UseFTGA&el=' + currentUrl + '&' + Math.random();
 } else {
 sendImpToThirdParty(Imp, AdName, AssID);
+gaServerTracker.src = 'http://www.ftchinese.com/index.php/ft/hit/' + AssID + '/2?ec=' + AdName + ' (' + AssID + ')' + '&ea=NoFTGA&el=' + currentUrl + '&' + Math.random();
 }
 gaServerTracker.src = 'http://www.ftchinese.com/index.php/ft/hit/' + AssID + '/2?ec=' + AdName + ' (' + AssID + ')' + '&ea=Confirm&el=' + currentUrl + '&' + Math.random();
 }
