@@ -26,7 +26,7 @@ function sendImpToThirdParty(t,e,r){if("string"==typeof t){"object"!=typeof wind
 var adFrameContainerDiv = parent.document.getElementById('ad-' + adId);
 var newItem = document.createElement("div");
 var newItemId = 'paidpost-' + adId;
-var template = '<a id="paid-post-mpu-new" href="[Click]" target="_blank"><div class="oneStory" style="background:[background];margin:0;padding:0;border-bottom:1px solid #e9decf;"><div class="storyInner" style="padding:14px;"><div class="headline">[headline]</div>[image]<div class="lead">[lead]</div><div style="text-align: right;"><span style="color:#333;font-size:0.9em;background:#bdbdbd;padding:3px;">广告</span></div></div></div></a>';
+var template = '<a id="paid-post-mpu-new" href="[Click]" target="_blank"><div class="oneStory" style="background:[background];margin:0;padding:0;border-bottom:1px solid #e9decf;"><div class="storyInner" style="padding:14px;"><div class="headline">[headline]</div>[image]<div class="lead" style="font-size:0.9em;">[lead]</div><div style="text-align: right;"><span style="color:#333;font-size:0.9em;background:#bdbdbd;padding:3px;">广告</span></div></div></div></a>';
 var imageTemplate = '<div class="leftimage" style="width: 167px;height: 96px;"><img style="width:167px;height:96px;" src="https://www.ft.com/__origami/service/image/v2/images/raw/[image]?source=ftchinese&amp;width=334&amp;height=188"></div>';
 var imageHTML = '';
 var finalHTML = '';
