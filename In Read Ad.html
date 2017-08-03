@@ -1,23 +1,23 @@
 <script>
-var inreadAd = {
-        'minSlot': 7,
-        'slot': '.story-body p', 
-        'displayTime': 2000000, 
+    var inreadAd = {
+        'minSlot': [[name=段落位置,width=250,type=textfield,allowblank=false,default=7]],
+        'slot': '.story-body p',
+        'displayTime': [[name=显示时间（ms）,width=250,type=textfield,allowblank=false,default=20000]],
         'played': false,
-        'vid': 'FBE98EB5D743B4649C33DC5901307461',
+        'vid': '[[name=____视频ID,width=250,type=textfield,allowblank=true]]',
+        'iframeSrc': '[[name=____iframe地址,width=250,type=textfield,allowblank=true]]',
+        'forceWidth': [[name=广告宽度,width=250,type=textfield,allowblank=false,default=0]],
+        'forceHeight': [[name=广告高度,width=250,type=textfield,allowblank=false,default=0]],
         'h': 0,
-        't':0,
+        't': 0,
         'htmlCode': '',
-        'iframeSrc': '/m/marketing/cartier-in-read.html',
         'id': 'inread-ad-container',
         'displayed': false,
         'sound': 'off',
-        'impression': '',
-        'click': 'http://www.ft.com',
-        'forceWidth': 590,
-        'forceHeight': 400
+        'impression': '[[name=第三方监测,width=250,type=textfield,allowblank=true]]',
+        'click': '[ASURL]'
     };
-
+    var Imp = inreadAd.impression;
 
     function initInreadAd() {
         //find the slot to insert inread ad
@@ -30,15 +30,12 @@ var inreadAd = {
         var clickTag = '';
         var clickTagHeight;
         var iframeSrc;
-
         if (inreadAd.forceWidth && inreadAd.forceWidth > 0) {
             inreadAdWidth = inreadAd.forceWidth;
         }
-
         if (inreadAd.forceHeight && inreadAd.forceHeight > 0) {
             inreadAdHeight = inreadAd.forceHeight;
         }
-
         inreadAd.h = inreadAdHeight + 30;
         if (window.location.hostname === 'localhost' || window.location.hostname.indexOf('192.168') === 0 || window.location.hostname.indexOf('10.113') === 0 || window.location.hostname.indexOf('127.0') === 0) {
             hostForVideo = 'http://www.ftchinese.com';
@@ -54,19 +51,17 @@ var inreadAd = {
         s.marginLeft = 'auto';
         s.marginRight = 'auto';
         //inreadAdContainer.style.backgroundColor = 'black';
-
         if (inreadAd.click !== '') {
             clickTagHeight = inreadAdHeight - 30;
-            clickTag = '<a target="_blank" href="'+ inreadAd.click +'" style="top:0;left:0;cursor:pointer;display:block;width:100%;position:absolute;height:'+clickTagHeight+'px"></a>';
+            clickTag = '<a target="_blank" href="[URL]" style="top:0;left:0;cursor:pointer;display:block;width:100%;position:absolute;height:' + clickTagHeight + 'px"></a>';
         }
-       
-       if (inreadAd.iframeSrc && inreadAd.iframeSrc !== '') {
-        iframeSrc =  inreadAd.iframeSrc;
-       } else {
-        iframeSrc =  hostForVideo + '/m/corp/video.html?vid='+ inreadAd.vid +'&w='+inreadAdWidth+'&h='+inreadAdHeight+'&autostart=true&sound=' + inreadAd.sound +'&003';
-       }
 
-        inreadAd.htmlCode = '<div style="width:100%;height:'+ inreadAdHeight +'px;position:relative;background:black;"><iframe name="inread-frame" id="inread-frame" style="width:'+ inreadAdWidth +'px;height:'+ inreadAdHeight +'px;position:absolute;" src="' + iframeSrc + '" scrolling="no" frameborder="0" allowfullscreen=true></iframe></div>' + clickTag;
+        if (inreadAd.iframeSrc && inreadAd.iframeSrc !== '') {
+            iframeSrc = inreadAd.iframeSrc;
+        } else {
+            iframeSrc = hostForVideo + '/m/corp/video.html?vid=' + inreadAd.vid + '&w=' + inreadAdWidth + '&h=' + inreadAdHeight + '&autostart=true&sound=' + inreadAd.sound + '&003';
+        }
+        inreadAd.htmlCode = '<div style="width:100%;height:' + inreadAdHeight + 'px;position:relative;background:black;"><iframe name="inread-frame" id="inread-frame" style="width:' + inreadAdWidth + 'px;height:' + inreadAdHeight + 'px;position:absolute;" src="' + iframeSrc + '" scrolling="no" frameborder="0" allowfullscreen=true></iframe></div>' + clickTag;
         inreadAdSlot.parentNode.insertBefore(inreadAdContainer, inreadAdSlot);
         inreadAd.t = findTop(inreadAdContainer);
     }
@@ -76,7 +71,7 @@ var inreadAd = {
         if (forcePlay === true) {
             inreadAd.displayed = false;
         }
-        if (typeof inreadAd === 'object' && inreadAd.h >0 && inreadAd.displayed === false) {
+        if (typeof inreadAd === 'object' && inreadAd.h > 0 && inreadAd.displayed === false) {
             ele = document.getElementById(inreadAd.id);
             ele.innerHTML = inreadAd.htmlCode;
             ele.style.height = inreadAd.h + 'px';
@@ -85,11 +80,17 @@ var inreadAd = {
                 ele.style.height = '0';
                 ele.innerHTML = '';
             }, inreadAd.displayTime);
-            if (inreadAd.impression !== '') {
-                var img = document.createElement('img');
-                img.src = inreadAd.impression;
-            }
         }
     }
     initInreadAd();
+    if (Imp !== '') {
+    var gaServerTracker = new Image();
+    gaServerTracker.src = 'http://www.ftchinese.com/index.php/ft/hit/' + AssID + '/2?ec=' + AdName + ' (' + AssID + ')' + '&ea=initiate&el=' + encodeURIComponent(Imp) + '&' + Math.random();
+    if (typeof window.parent.sendImpToThirdParty === 'function') {
+    window.parent.sendImpToThirdParty(Imp, AdName, AssID);
+    } else {
+    sendImpToThirdParty(Imp, AdName, AssID);
+    }
+    }
+    function sendImpToThirdParty(t,e,r){if("string"==typeof t){"object"!=typeof window.parent.gTrackThirdParyImpression&&(window.parent.gTrackThirdParyImpression={});var n=0,a=t,i=!1,o=function(){var t=arguments[0]||"",e=arguments[1]||"",n=arguments[2]||"",a="G"+Math.round(1e12*Math.random());try{window.parent.ga("send","event",t,e,n,{nonInteraction:1})}catch(o){var i=new Image;i.src="http://www.ftchinese.com/index.php/ft/hit/"+r+"/2?ec="+t+"&ea="+e+"&el="+encodeURIComponent(n)+"&r="+a}},c=function(){var d,s="IMG"+Math.round(1e12*Math.random()),p=(new Date).getTime(),h=t;try{d=arguments[0]||""}catch(t){d=""}h.indexOf("?")<0&&(h+="?"),h=h.replace("ord=[timestamp]","ord="+p)+"&"+s+"&ftctime="+p,n>0&&(0===a.indexOf("https")?(h=h.replace("https://ad.doubleclick.net","http://ad.doubleclick.net"),h=h.replace("https://v.admaster.com.cn","http://v.admaster.com.cn")):(h=h.replace("http://ad.doubleclick.net","https://ad.doubleclick.net"),h=h.replace("http://v.admaster.com.cn","https://v.admaster.com.cn"))),a=h,window.parent.gTrackThirdParyImpression[s]=new Image,window.parent.gTrackThirdParyImpression[s].src=h,window.parent.gTrackThirdParyImpression[s].title=e+" ("+r+")",window.parent.gTrackThirdParyImpression[s].alt=t,window.parent.gTrackThirdParyImpression[s].onload=function(){var t="";t=0===n?"Success":""!==d?"Success on Retry"+d:"Success on Retry"+n,o(this.title,t,this.alt),delete window.parent.gTrackThirdParyImpression[s],i=!0},window.parent.gTrackThirdParyImpression[s].onerror=function(){var t="";if(t=0===n?"Fail":""!==d?"Fail on Retry"+d:"Fail on Retry"+n,o(this.title,t,this.alt),o("Fail UA String",r,window.parent.adReachability()),"string"==typeof window.uaString)try{window.parent._hmt.push(["_trackEvent",this.title,"Fail",window.uaString])}catch(t){}++n<=3&&setTimeout(c,100*n*n*n)}};c(),setTimeout(function(){if(i===!1&&0===n){n=2;c(" from Pending"),o(e+" ("+r+")","Request from Pending",t)}},1e4),o(e+" ("+r+")","Request",t)}}
 </script>
