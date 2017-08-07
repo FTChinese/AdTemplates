@@ -7,7 +7,10 @@ var v_width = '[[name=视频width,type=textfield,allowblank=false,width=50,defau
 var v_height = '[[name=视频height,type=textfield,allowblank=false,width=50,default=250]]';
 var Imp = '[[name=第三方监测,type=textfield,allowblank=true,width=250]]';
 var AdName = '[[name=广告命名,width=250,type=textfield,allowblank=true]]';
+var AutoPlay = '[[name=自动播放(Y/N),width=250,type=textfield,allowblank=false,default=N]]';
+var videoUrl = '[[name=视频URL（选填）,width=250,type=textfield,allowblank=true]]';
 var AssID = '[ASSID]';
+var Click = '[URL]';
 
 if (typeof uaString === 'string') {
     if (/iphone/i.test(uaString)) {
@@ -52,8 +55,15 @@ function video(obj) {
     document.getElementById('video').innerHTML = '<video src="' + obj.copies[0].playurl + '" width="' + v_width + '" height="' + v_height + '" airplay="deny" x-webkit-airplay="deny" playsinline webkit-playsinline>Your browser does not support the <code>video</code> element.</video>';
     var v = document.getElementsByTagName('video')[0];
     v.controls = true;
-    v.volume = 0;
-    v.muted = true;
     v.poster = obj.img;
+    if (AutoPlay === 'Y') {
+        v.autoplay = true;
+        v.volume = 0;
+        v.muted = true;
+    } else {
+        v.autoplay = false;
+        v.volume = 30;
+        v.muted = false;
+    }
 }
 </script>
