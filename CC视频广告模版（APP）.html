@@ -57,7 +57,8 @@ function video(obj) {
     v.controls = true;
     v.poster = obj.img;
     var isUsingData = (parent.window.gConnectionType === 'data')? true : false;
-    if (isUsingData === true) {
+    var isUsingPhone = (/phone/i.test(parent.window.gDeviceType) || /pad/i.test(parent.window.gDeviceType))? true : false;
+    if (isUsingData === true || isUsingPhone === false) {
         AutoPlay = 'N';
     }
     if (AutoPlay === 'Y') {
@@ -69,7 +70,11 @@ function video(obj) {
         v.autoplay = false;
         v.muted = false;
         v.preload = 'none';
-        soundButton.style.display = 'none';
+        if (isUsingPhone) {
+            soundButton.style.display = 'block';
+        } else {
+            soundButton.style.display = 'none';
+        }
     }
 }
 
