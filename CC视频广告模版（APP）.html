@@ -39,8 +39,7 @@ if (Imp !== '') {
 function sendImpToThirdParty(t,e,r){if("string"==typeof t){"object"!=typeof window.parent.gTrackThirdParyImpression&&(window.parent.gTrackThirdParyImpression={});var n=0,a=t,i=!1,o=function(){var t=arguments[0]||"",e=arguments[1]||"",n=arguments[2]||"",a="G"+Math.round(1e12*Math.random());try{window.parent.ga("send","event",t,e,n,{nonInteraction:1})}catch(o){var i=new Image;i.src="http://www.ftchinese.com/index.php/ft/hit/"+r+"/2?ec="+t+"&ea="+e+"&el="+encodeURIComponent(n)+"&r="+a}},c=function(){var d,s="IMG"+Math.round(1e12*Math.random()),p=(new Date).getTime(),h=t;try{d=arguments[0]||""}catch(t){d=""}h.indexOf("?")<0&&(h+="?"),h=h.replace("ord=[timestamp]","ord="+p)+"&"+s+"&ftctime="+p,n>0&&(0===a.indexOf("https")?(h=h.replace("https://ad.doubleclick.net","http://ad.doubleclick.net"),h=h.replace("https://v.admaster.com.cn","http://v.admaster.com.cn")):(h=h.replace("http://ad.doubleclick.net","https://ad.doubleclick.net"),h=h.replace("http://v.admaster.com.cn","https://v.admaster.com.cn"))),a=h,window.parent.gTrackThirdParyImpression[s]=new Image,window.parent.gTrackThirdParyImpression[s].src=h,window.parent.gTrackThirdParyImpression[s].title=e+" ("+r+")",window.parent.gTrackThirdParyImpression[s].alt=t,window.parent.gTrackThirdParyImpression[s].onload=function(){var t="";t=0===n?"Success":""!==d?"Success on Retry"+d:"Success on Retry"+n,o(this.title,t,this.alt),delete window.parent.gTrackThirdParyImpression[s],i=!0},window.parent.gTrackThirdParyImpression[s].onerror=function(){var t="";if(t=0===n?"Fail":""!==d?"Fail on Retry"+d:"Fail on Retry"+n,o(this.title,t,this.alt),o("Fail UA String",r,window.parent.adReachability()),"string"==typeof window.uaString)try{window.parent._hmt.push(["_trackEvent",this.title,"Fail",window.uaString])}catch(t){}++n<=3&&setTimeout(c,100*n*n*n)}};c(),setTimeout(function(){if(i===!1&&0===n){n=2;c(" from Pending"),o(e+" ("+r+")","Request from Pending",t)}},1e4),o(e+" ("+r+")","Request",t)}}
 
 document.write('<div style="width:' + v_width + 'px; height:' + v_height + 'px; display:block; overflow:hidden">');
-document.write('<div id="video"></div>');
-
+document.write('<div id="video" style="position:relative;"></div>');
 document.write('<a style="cursor:pointer; width:1px; height:1px; display:block;" href="[URL]" target="_blank"><div style="width:300px; height:70px; position:relative; top:-250px; left:0px; z-index:10; background-color:#FFF; filter:alpha(opacity=' + opacity + '); -moz-opacity:' + opacity + '; opacity:' + opacity + '; cursor:pointer; border:none; padding:0px; margin:0px"></div></a></div>');
 document.write('<a style="cursor:pointer; width:1px; height:1px; display:block;" href="[URL]" target="_blank"><div style="width:300px; height:70px; position:relative; top:-100px; left:0px; z-index:10; background-color:#FFF; filter:alpha(opacity=' + opacity + '); -moz-opacity:' + opacity + '; opacity:' + opacity + '; cursor:pointer; border:none; padding:0px; margin:0px"></div></a></div>');
 document.write('<a style="cursor:pointer; width:1px; height:1px; display:block;" href="[URL]" target="_blank"><div style="width:100px; height:220px; position:relative; top:-250px; left:0px; z-index:10; background-color:#FFF; filter:alpha(opacity=' + opacity + '); -moz-opacity:' + opacity + '; opacity:' + opacity + '; cursor:pointer; border:none; padding:0px; margin:0px"></div></a></div>');
@@ -52,17 +51,37 @@ JSONP.src = 'http://p.bokecc.com/servlet/getvideofile?vid=' + vid + '&siteid=' +
 document.getElementsByTagName('head')[0].appendChild(JSONP);
 
 function video(obj) {
-    document.getElementById('video').innerHTML = '<video src="' + obj.copies[0].playurl + '" width="' + v_width + '" height="' + v_height + '" airplay="deny" x-webkit-airplay="deny" playsinline webkit-playsinline>Your browser does not support the <code>video</code> element.</video>';
-    var v = document.getElementsByTagName('video')[0];
+    document.getElementById('video').innerHTML = '<video id="mpu-video" src="' + obj.copies[0].playurl + '" width="' + v_width + '" height="' + v_height + '" airplay="deny" x-webkit-airplay="deny" playsinline webkit-playsinline>Your browser does not support the <code>video</code> element.</video><div id="sound-button" style="width:36px; height:36px; position:absolute; top:0; left:0px; z-index:16; background-color:#FFF; cursor:pointer; border:none; padding:0px; margin:0px; background: url(http://static.ftchinese.com/ftc-icons/png/ic_volume_up_white_18pt.png) rgba(0,0,0,0.618) no-repeat 50% 50%; " onclick="switchSound(this)"></div>';
+    var v = document.getElementById('mpu-video');
+    var soundButton = document.getElementById('sound-button');
     v.controls = true;
     v.poster = obj.img;
+    var isUsingData = (parent.window.gConnectionType === 'data')? true : false;
+    if (isUsingData === true) {
+        AutoPlay = 'N';
+    }
     if (AutoPlay === 'Y') {
         v.autoplay = true;
-        v.volume = 0;
         v.muted = true;
+        v.preload = 'metadata';
+        soundButton.style.display = 'block';
     } else {
         v.autoplay = false;
-        v.volume = 30;
+        v.muted = false;
+        v.preload = 'none';
+        soundButton.style.display = 'none';
+    }
+}
+
+function switchSound(ele) {
+    var v = document.getElementById('mpu-video');
+    if (ele.className == 'sound-on') {
+        ele.className = '';
+        ele.style.backgroundImage = 'url(http://static.ftchinese.com/ftc-icons/png/ic_volume_up_white_18pt.png)';
+        v.muted = true;
+    } else {
+        ele.className = 'sound-on';
+        ele.style.backgroundImage = 'url(http://static.ftchinese.com/ftc-icons/png/ic_volume_off_white_18pt.png)';
         v.muted = false;
     }
 }
