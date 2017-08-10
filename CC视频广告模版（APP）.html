@@ -58,7 +58,7 @@ function video(obj) {
     v.poster = obj.img;
     var isUsingData = (parent.window.gConnectionType === 'data')? true : false;
     var isUsingPhone = (/phone/i.test(parent.window.gDeviceType) || /pad/i.test(parent.window.gDeviceType))? true : false;
-    if (isUsingData === true || isUsingPhone === false) {
+    if (isUsingData === true || isUsingPhone === true) {
         AutoPlay = 'N';
     }
     if (AutoPlay === 'Y') {
