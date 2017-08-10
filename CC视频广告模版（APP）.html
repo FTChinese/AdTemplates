@@ -62,18 +62,21 @@ function video(obj) {
         AutoPlay = 'N';
     }
     if (AutoPlay === 'Y') {
+        // MARK: When user is runnin the ad from a web page using wifi
         v.autoplay = true;
         v.muted = true;
         v.preload = 'metadata';
         soundButton.style.display = 'block';
     } else {
         v.autoplay = false;
-        v.muted = false;
         v.preload = 'none';
-        if (isUsingPhone) {
+        if (isUsingData === false) {
+            // MARK: If in a web app, set autoplay as N. But play video when user scroll the MPU into view. 
             soundButton.style.display = 'block';
+            v.muted = true;
         } else {
             soundButton.style.display = 'none';
+            v.muted = false;
         }
     }
 }
