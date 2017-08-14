@@ -47,7 +47,7 @@ document.write('<a style="cursor:pointer; width:1px; height:1px; display:block;"
 
 var JSONP = document.createElement('script');
 JSONP.type = 'text/javascript';
-JSONP.src = 'http://p.bokecc.com/servlet/getvideofile?vid=' + vid + '&siteid=' + siteid + '&divid=&callback=video&useragent=' + useragent;
+JSONP.src = 'http://p.bokecc.com/servlet/getvideofile?[ASRANDOM]&vid=' + vid + '&siteid=' + siteid + '&divid=&callback=video&useragent=' + useragent;
 document.getElementsByTagName('head')[0].appendChild(JSONP);
 
 function video(obj) {
@@ -71,7 +71,7 @@ function video(obj) {
         v.autoplay = false;
         v.preload = 'none';
         if (isUsingData === false) {
-            // MARK: If in a web app, set autoplay as N. But play video when user scroll the MPU into view. 
+            // MARK: If in a web app, set autoplay as N. But play video when user scroll the MPU into view.
             soundButton.style.display = 'block';
             v.muted = true;
         } else {
