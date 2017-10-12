@@ -25,7 +25,7 @@ function sendImpToThirdParty(t,e,r){if("string"==typeof t){"object"!=typeof wind
 // MARK: - Code that generate the paid post in a parent window
 var adFrameContainerDiv = '';
 
-if (typeof window.parentId === 'string' || window.parentId !== '') {
+if (typeof window.parentId === 'string' && window.parentId !== '') {
     adFrameContainerDiv = parent.document.getElementById(parentId);
     window.adId = parentId;
 } else {
@@ -87,7 +87,7 @@ if (!parent.document.getElementById(newItemId)) {
 newItem.innerHTML = finalHTML;
 
 // MARK: - Set the top border of the next story to 0 so that there's no double-line
-if (typeof window.parentId === 'string' || window.parentId !== '') {
+if (typeof window.parentId === 'string' && window.parentId !== '') {
     adFrameContainerDiv.parentNode.nextElementSibling.style.borderTopWidth = 0;
 } else {
     adFrameContainerDiv.nextElementSibling.nextElementSibling.style.borderTopWidth = 0;
