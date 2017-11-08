@@ -31,10 +31,10 @@ if (w > h) {
     h = newW;
 }
 
-if (typeof ImgPortrait === 'undefined') {
+if (ImgPortrait === '') {
     ImgLandscape = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + encodeURIComponent(ImgLandscape) + '?source=ftchinese&width=' + 828;
     ImgPortrait = ImgLandscape;
-} else if (typeof ImgLandscape === 'undefined') {
+} else if (ImgLandscape === '') {
     ImgPortrait = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + encodeURIComponent(ImgPortrait) + '?source=ftchinese&width=' + 828;
     ImgLandscape = ImgPortrait;
 } else {
